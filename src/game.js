@@ -1,28 +1,47 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
 
-window.addEventListener('load', startGame);
+let canvasSize;
+let elementSize;
 
-function startGame() {
-  let canvasSize;
+window.addEventListener('load', setCanvasSize);
 
+// ejecuta la funcion de render sin recargar el navegador
+window.addEventListener('resize', setCanvasSize);
+
+function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
     canvasSize = window.innerWidth * 0.8;
   } else {
     canvasSize = window.innerHeight * 0.8;
   }
 
-  canvas.setAttribute('width', canvasSize)
-  canvas.setAttribute('height', canvasSize)
-
-  const elementSize = (canvasSize / 10) - 1
+  canvas.setAttribute('height', canvasSize);
+  canvas.setAttribute('width', canvasSize);
+  elementSize = (canvasSize / 10) - 4;
+  startGame();
+}
+function startGame() {
   game.font = elementSize + 'px Verdana';
-  game.textAlign = '';
+  game.textAlign = 'center';
 
-  for (let i = 0; i < 10; i++) {
-    game.fillText(emojis['X'], elementSize * i, elementSize);
+  const map = maps[2];
+  //.trim() funciona para eliminar los espacios vacios al inicio y al final
+  //.split('\n') funciona para identificar los saltos de lineas y hacerlos strings independientes
+  const mapRows = map.trim().split('\n');
+  const mapRowsCols = mapRows.map(row => row.trim().split(''))
+  console.log({ map, mapRows, mapRowsCols });
+
+
+  for (let row = 1; row <= 10; row++) {
+    for (let col = 1; col <= 10; col++) {
+      game.fillText(emojis[mapRowsCols[row - 1][col - 1]], elementSize * col, elementSize * row);
+
+    }
 
   }
+
+
   //game.fillRect(0, 50, 100, 100);
   // game.clearRect(50, 50, 50, 50);
 
