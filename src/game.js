@@ -6,8 +6,14 @@ const btnLeft = document.querySelector('#left');
 const btnRigth = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 
+const playerPosition = {
+  x: undefined,
+  y: undefined,
+}
+
 let canvasSize;
 let elementSize;
+
 
 window.addEventListener('load', setCanvasSize);
 
@@ -30,17 +36,26 @@ function startGame() {
   game.font = elementSize + 'px Verdana';
   game.textAlign = 'center';
 
-  const map = maps[2];
+  const map = maps[0];
   //.trim() funciona para eliminar los espacios vacios al inicio y al final
   //.split('\n') funciona para identificar los saltos de lineas y hacerlos strings independientes
   const mapRows = map.trim().split('\n');
   const mapRowsCols = mapRows.map(row => row.trim().split(''))
 
+  game.clearRect(0, 0, canvasSize, canvasSize);
   mapRowsCols.forEach((row, rowI) => {
     row.forEach((col, colI) => {
       const emoji = emojis[col];
       const posX = elementSize * (colI + 1);
       const posY = elementSize * (rowI + 1);
+
+      if (col == 'O') {
+        if (!playerPosition.x && !playerPosition.y) {
+          playerPosition.x = posX;
+          playerPosition.y = posY;
+          console.log({ playerPosition });
+        }
+      }
       game.fillText(emoji, posX, posY);
     });
   });
@@ -61,6 +76,13 @@ function startGame() {
   // game.fillStyle = "blue";
   // game.textAlign = "center";
   // game.fillText("Carlos", 100, 100)
+  movePlayer();
+}
+
+//render del player
+function movePlayer() {
+  game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
+
 }
 
 //eventos de teclado
@@ -82,13 +104,21 @@ function moveByKeys(event) {
 //funcion para moviento 
 function moveUp() {
   console.log('te moviste hacia arriba');
+  playerPosition.y -= elementSize;
+  startGame();
 }
 function moveLeft() {
   console.log('te moviste hacia la izquierda');
+  playerPosition.x -= elementSize;
+  startGame();
 }
 function moveRight() {
   console.log('te moviste hacia la derecha');
+  playerPosition.x += elementSize;
+  startGame();
 }
 function moveDown() {
   console.log('te moviste hacia abajo');
+  playerPosition.y += elementSize;
+  startGame();
 }
