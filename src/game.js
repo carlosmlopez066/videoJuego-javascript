@@ -1,5 +1,10 @@
 const canvas = document.querySelector('#game');
 const game = canvas.getContext('2d');
+//buttons
+const btnUp = document.querySelector('#up');
+const btnLeft = document.querySelector('#left');
+const btnRigth = document.querySelector('#right');
+const btnDown = document.querySelector('#down');
 
 let canvasSize;
 let elementSize;
@@ -30,7 +35,6 @@ function startGame() {
   //.split('\n') funciona para identificar los saltos de lineas y hacerlos strings independientes
   const mapRows = map.trim().split('\n');
   const mapRowsCols = mapRows.map(row => row.trim().split(''))
-  console.log({ map, mapRows, mapRowsCols });
 
   mapRowsCols.forEach((row, rowI) => {
     row.forEach((col, colI) => {
@@ -59,4 +63,32 @@ function startGame() {
   // game.fillText("Carlos", 100, 100)
 }
 
+//eventos de teclado
+window.addEventListener('keydown', moveByKeys);
+//eventos botones en pantalla
+btnUp.addEventListener('click', moveUp);
+btnLeft.addEventListener('click', moveLeft);
+btnRigth.addEventListener('click', moveRight);
+btnDown.addEventListener('click', moveDown);
 
+//funcion evento teclado
+function moveByKeys(event) {
+  if (event.key == 'ArrowUp') moveUp();
+  else if (event.key == 'ArrowLeft') moveLeft();
+  else if (event.key == 'ArrowRight') moveRight();
+  else if (event.key == 'ArrowDown') moveDown();
+
+}
+//funcion para moviento 
+function moveUp() {
+  console.log('te moviste hacia arriba');
+}
+function moveLeft() {
+  console.log('te moviste hacia la izquierda');
+}
+function moveRight() {
+  console.log('te moviste hacia la derecha');
+}
+function moveDown() {
+  console.log('te moviste hacia abajo');
+}
