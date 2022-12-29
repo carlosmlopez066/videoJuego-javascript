@@ -7,11 +7,16 @@ const btnRigth = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 //items
 let livesSpan = document.querySelector('#lives');
+let timeSpan = document.querySelector('#time');
 
 let canvasSize;
 let elementSize;
 let level = 0;
 let lives = 3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 const playerPosition = {
   x: undefined,
@@ -52,6 +57,11 @@ function startGame() {
   if (!map) {
     gameWin();
     return;
+  }
+
+  if (!timeStart) {
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime, 100)
   }
 
   //.trim() funciona para eliminar los espacios vacios al inicio y al final
@@ -141,6 +151,7 @@ function levelFail() {
   if (lives <= 0) {
     level = 0;
     lives = 3;
+    timeStart = undefined;
   }
 
   playerPosition.x = undefined;
@@ -150,6 +161,7 @@ function levelFail() {
 //ganar Juego
 function gameWin() {
   console.log('terminaste el juego');
+  clearInterval(timeInterval);
 }
 //manipulacion de vidas
 function showLives() {
@@ -158,6 +170,9 @@ function showLives() {
   heartArr.forEach(heart => livesSpan.append(heart))
   //livesSpan.innerHTML = heartArr
 
+}
+function showTime() {
+  timeSpan.innerHTML = Date.now() - timeStart
 }
 //eventos de teclado
 window.addEventListener('keydown', moveByKeys);
