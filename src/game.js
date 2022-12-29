@@ -5,6 +5,8 @@ const btnUp = document.querySelector('#up');
 const btnLeft = document.querySelector('#left');
 const btnRigth = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
+//items
+let livesSpan = document.querySelector('#lives');
 
 let canvasSize;
 let elementSize;
@@ -56,6 +58,8 @@ function startGame() {
   //.split('\n') funciona para identificar los saltos de lineas y hacerlos strings independientes
   const mapRows = map.trim().split('\n');
   const mapRowsCols = mapRows.map(row => row.trim().split(''))
+
+  showLives();
 
   enemyPosition = []
   game.clearRect(0, 0, canvasSize, canvasSize);
@@ -133,7 +137,7 @@ function levelWin() {
 function levelFail() {
   console.log('chocaste con un enemigo');
   console.log(lives);
-  lives--
+  lives--;
   if (lives <= 0) {
     level = 0;
     lives = 3;
@@ -146,6 +150,14 @@ function levelFail() {
 //ganar Juego
 function gameWin() {
   console.log('terminaste el juego');
+}
+//manipulacion de vidas
+function showLives() {
+  const heartArr = Array(lives).fill(emojis['HEART'])// [crea un arra con las posiciones que diga la variable lives]
+  livesSpan.innerHTML = '';
+  heartArr.forEach(heart => livesSpan.append(heart))
+  //livesSpan.innerHTML = heartArr
+
 }
 //eventos de teclado
 window.addEventListener('keydown', moveByKeys);
