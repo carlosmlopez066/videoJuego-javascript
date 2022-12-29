@@ -6,13 +6,18 @@ const btnLeft = document.querySelector('#left');
 const btnRigth = document.querySelector('#right');
 const btnDown = document.querySelector('#down');
 
+let canvasSize;
+let elementSize;
+
 const playerPosition = {
   x: undefined,
   y: undefined,
 }
 
-let canvasSize;
-let elementSize;
+const giftPosition = {
+  x: undefined,
+  y: undefined,
+}
 
 
 window.addEventListener('load', setCanvasSize);
@@ -55,6 +60,9 @@ function startGame() {
           playerPosition.y = posY;
           console.log({ playerPosition });
         }
+      } else if (col == 'I') {
+        giftPosition.x = posX;
+        giftPosition.y = posY;
       }
       game.fillText(emoji, posX, posY);
     });
@@ -81,7 +89,15 @@ function startGame() {
 
 //render del player
 function movePlayer() {
-  game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y)
+  const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
+  const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+  const giftCollision = giftCollisionX && giftCollisionY;
+  if (giftCollision) {
+    console.log('subiste de nivel');
+  }
+
+  game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
+
 
 }
 
