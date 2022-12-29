@@ -8,6 +8,7 @@ const btnDown = document.querySelector('#down');
 
 let canvasSize;
 let elementSize;
+let level = 0;
 
 const playerPosition = {
   x: undefined,
@@ -43,7 +44,13 @@ function startGame() {
   game.font = elementSize + 'px Verdana';
   game.textAlign = 'center';
 
-  const map = maps[0];
+  const map = maps[level];
+
+  if (!map) {
+    gameWin();
+    return;
+  }
+
   //.trim() funciona para eliminar los espacios vacios al inicio y al final
   //.split('\n') funciona para identificar los saltos de lineas y hacerlos strings independientes
   const mapRows = map.trim().split('\n');
@@ -101,7 +108,7 @@ function movePlayer() {
   const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
   const giftCollision = giftCollisionX && giftCollisionY;
   if (giftCollision) {
-    console.log('subiste de nivel');
+    levelWin();
   }
 
   const enemyCollision = enemyPosition.find(enemy => {
@@ -115,7 +122,16 @@ function movePlayer() {
 
   game.fillText(emojis['PLAYER'], playerPosition.x, playerPosition.y);
 }
-
+//ganar nivel
+function levelWin() {
+  console.log('subiste de nivel');
+  level++
+  startGame();
+}
+//ganar Juego
+function gameWin() {
+  console.log('terminaste el juego');
+}
 //eventos de teclado
 window.addEventListener('keydown', moveByKeys);
 //eventos botones en pantalla
