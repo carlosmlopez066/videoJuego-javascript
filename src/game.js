@@ -8,6 +8,8 @@ const btnDown = document.querySelector('#down');
 //items
 let livesSpan = document.querySelector('#lives');
 let timeSpan = document.querySelector('#time');
+let recordSpan = document.querySelector('#record');
+let pResult = document.querySelector('#result');
 
 let canvasSize;
 let elementSize;
@@ -55,13 +57,14 @@ function startGame() {
   const map = maps[level];
 
   if (!map) {
-    gameWin();
+    gameWinAndSetRecord();
     return;
   }
 
   if (!timeStart) {
     timeStart = Date.now();
     timeInterval = setInterval(showTime, 100)
+    showRecord();
   }
 
   //.trim() funciona para eliminar los espacios vacios al inicio y al final
@@ -143,7 +146,7 @@ function levelWin() {
   level++
   startGame();
 }
-//reiniciar juego tras collision
+//rgameWinAndSetRecordeiniciar juego tras collision
 function levelFail() {
   console.log('chocaste con un enemigo');
   console.log(lives);
@@ -159,9 +162,25 @@ function levelFail() {
   startGame();
 }
 //ganar Juego
-function gameWin() {
+function gameWinAndSetRecord() {
   console.log('terminaste el juego');
   clearInterval(timeInterval);
+  const playerTime = Date.now() - timeStart;
+
+  const recordTime = localStorage.getItem('record_time');
+  if (recordTime) {
+    if (recordTime > playerTime) {
+      localStorage.setItem('record_time', playerTime);
+      pResult.innerHTML = 'SUPERTASTE EL RECORD';
+    } else {
+      pResult.innerHTML = 'no superaste el record';
+    }
+  } else {
+    localStorage.setItem('record_time', playerTime);
+    pResult.innerHTML = 'Excelente, acabas de marcar tu primer record, trata de superarte!'
+
+  }
+  console.log({ recordTime, playerTime });
 }
 //manipulacion de vidas
 function showLives() {
@@ -173,6 +192,9 @@ function showLives() {
 }
 function showTime() {
   timeSpan.innerHTML = Date.now() - timeStart
+}
+function showRecord() {
+  recordSpan.innerHTML = localStorage.getItem('record_time')
 }
 //eventos de teclado
 window.addEventListener('keydown', moveByKeys);
