@@ -10,6 +10,10 @@ let livesSpan = document.querySelector('#lives');
 let timeSpan = document.querySelector('#time');
 let recordSpan = document.querySelector('#record');
 let pResult = document.querySelector('#result');
+//
+let finalDiv = document.querySelector('#final-div');
+let finalP = document.querySelector('#finalP');
+let btnReiniciar = document.querySelector('#btn-reiniciar');
 
 let canvasSize;
 let elementSize;
@@ -40,9 +44,9 @@ window.addEventListener('resize', setCanvasSize);
 
 function setCanvasSize() {
   if (window.innerHeight > window.innerWidth) {
-    canvasSize = window.innerWidth * 0.8;
+    canvasSize = window.innerWidth * 0.7;
   } else {
-    canvasSize = window.innerHeight * 0.8;
+    canvasSize = window.innerHeight * 0.7;
   }
 
   canvasSize = Number(canvasSize.toFixed(0))
@@ -125,16 +129,16 @@ function startGame() {
 
 //render del player
 function movePlayer() {
-  const giftCollisionX = playerPosition.x.toFixed(3) == giftPosition.x.toFixed(3);
-  const giftCollisionY = playerPosition.y.toFixed(3) == giftPosition.y.toFixed(3);
+  const giftCollisionX = Number(playerPosition.x.toFixed(3)) == Number(giftPosition.x.toFixed(3));
+  const giftCollisionY = Number(playerPosition.y.toFixed(3)) == Number(giftPosition.y.toFixed(3));
   const giftCollision = giftCollisionX && giftCollisionY;
   if (giftCollision) {
     levelWin();
   }
 
   const enemyCollision = enemyPosition.find(enemy => {
-    const enemyCollisionX = enemy.x.toFixed(3) == playerPosition.x.toFixed(3);
-    const enemyCollisionY = enemy.y.toFixed(3) == playerPosition.y.toFixed(3);
+    const enemyCollisionX = Number(enemy.x.toFixed(3)) == Number(playerPosition.x.toFixed(3));
+    const enemyCollisionY = Number(enemy.y.toFixed(3)) == Number(playerPosition.y.toFixed(3));
     return enemyCollisionX && enemyCollisionY;
   });
   if (enemyCollision) {
@@ -145,28 +149,30 @@ function movePlayer() {
 }
 //ganar nivel
 function levelWin() {
-  console.log('subiste de nivel');
+  //console.log('subiste de nivel');
   level++
   startGame();
 }
 //rgameWinAndSetRecordeiniciar juego tras collision
 function levelFail() {
-  console.log('chocaste con un enemigo');
+  //console.log('chocaste con un enemigo');
   console.log(lives);
   lives--;
   if (lives <= 0) {
     level = 0;
     lives = 3;
     timeStart = undefined;
+    endDisplay(2)
   }
 
   playerPosition.x = undefined;
   playerPosition.y = undefined;
+
   startGame();
 }
 //ganar Juego
 function gameWinAndSetRecord() {
-  console.log('terminaste el juego');
+  //console.log('terminaste el juego');
   clearInterval(timeInterval);
   const playerTime = Date.now() - timeStart;
 
@@ -183,8 +189,24 @@ function gameWinAndSetRecord() {
     pResult.innerHTML = 'Excelente, acabas de marcar tu primer record, trata de superarte!'
 
   }
-  console.log({ recordTime, playerTime });
+  // console.log({ recordTime, playerTime });
+  endDisplay(1);
 }
+//pantalla de victoria
+function endDisplay(n) {
+  finalDiv.style.display = 'flex'
+
+  if (n === 1) {
+    finalP.innerHTML = 'GANASTE'
+  } else if (n === 2) {
+    finalP.innerHTML = 'PERDISTE'
+
+  }
+
+}
+//reload
+btnReiniciar.addEventListener('click', event => location.reload())
+
 //manipulacion de vidas
 function showLives() {
   const heartArr = Array(lives).fill(emojis['HEART'])// [crea un arra con las posiciones que diga la variable lives]
@@ -217,7 +239,7 @@ function moveByKeys(event) {
 }
 //funcion para moviento 
 function moveUp() {
-  console.log('te moviste hacia arriba');
+  // console.log('te moviste hacia arriba');
 
   if ((playerPosition.y - elementSize) < elementSize) {
     console.log('out');
@@ -228,7 +250,7 @@ function moveUp() {
   }
 }
 function moveLeft() {
-  console.log('te moviste hacia la izquierda');
+  // console.log('te moviste hacia la izquierda');
   if ((playerPosition.x - elementSize) < elementSize) {
     console.log('out');
   } else {
@@ -238,7 +260,7 @@ function moveLeft() {
   }
 }
 function moveRight() {
-  console.log('te moviste hacia la derecha');
+  // console.log('te moviste hacia la derecha');
   if ((playerPosition.x + elementSize) > canvasSize) {
     console.log('out');
   } else {
@@ -248,7 +270,7 @@ function moveRight() {
   }
 }
 function moveDown() {
-  console.log('te moviste hacia abajo');
+  //console.log('te moviste hacia abajo');
   if ((playerPosition.y + elementSize) > canvasSize) {
     console.log('out');
   } else {

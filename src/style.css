@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: indigo;
   color: #fff;
@@ -56,6 +60,51 @@ p {
   margin: 0;
   width: 100%;
 }
+
+
+
+#final-div {
+  background-color: rgba(100, 149, 237, 50%);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* display: none; */
+}
+
+#finalP {
+  text-shadow: 1px 1px 8px black;
+  font-size: 50px;
+  font-weight: 800;
+  margin-bottom: 40px;
+}
+
+#final-message {
+  font-size: 30px;
+  font-weight: 800;
+  text-shadow: 1px 1px 8px black;
+  width: 80%;
+}
+
+#btn-reiniciar {
+  width: 400px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 700;
+  background-color: tomato;
+  color: white;
+  cursor: pointer;
+}
+
+#btn-reiniciar:hover {
+  background-color: red;
+}
+
 
 @media (max-width: 440px) {
   button {
