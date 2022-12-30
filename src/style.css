@@ -1,9 +1,13 @@
+:root {
+  --lose: rgba(255, 64, 39, 0.5)
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  background-color: indigo;
+  background: linear-gradient(to top, black, rgb(100, 149, 237));
   color: #fff;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   margin: 0;
@@ -20,9 +24,10 @@ body {
 }
 
 canvas {
-  border: 4px solid #ff6600;
+  border: 5px solid white;
   border-radius: 8px;
-  background-color: #feff9d;
+  background-image: url('https://thumbs.dreamstime.com/b/ejemplo-del-vector-dise%C3%B1o-de-la-pared-ladrillos-pixel-hormig%C3%B3n-vintage-estructura-textura-modelo-y-tema-fondo-149735417.jpg');
+
 }
 
 .btns {
@@ -34,13 +39,21 @@ canvas {
 }
 
 button {
-  background-color: #fdef05;
+  background-color: rgb(100, 149, 237);
   border-radius: 8px;
-  border-color: #ff6600;
+  border-color: white;
   font-family: inherit;
   margin: 0;
   padding: 5px 20px;
   width: 100px;
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  text-align: center;
+}
+
+button:hover {
+  background-color: rgb(140, 177, 246);
 }
 
 button:not(:last-child) {
@@ -53,6 +66,7 @@ button:not(:last-child) {
   margin: 0 auto;
   width: 80%;
   max-width: 460px;
+  font-weight: bold;
 }
 
 p {
@@ -99,11 +113,28 @@ p {
   background-color: tomato;
   color: white;
   cursor: pointer;
+  margin-top: 40px;
 }
 
 #btn-reiniciar:hover {
+
   background-color: red;
 }
+
+#boomDisplay {
+  background-color: rgba(255, 64, 39, 0.5);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+}
+
 
 
 @media (max-width: 440px) {

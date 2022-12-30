@@ -14,6 +14,8 @@ let pResult = document.querySelector('#result');
 let finalDiv = document.querySelector('#final-div');
 let finalP = document.querySelector('#finalP');
 let btnReiniciar = document.querySelector('#btn-reiniciar');
+let boomDisplay = document.querySelector('#boomDisplay');
+
 
 let canvasSize;
 let elementSize;
@@ -58,6 +60,7 @@ function setCanvasSize() {
   startGame();
 }
 function startGame() {
+  boomDisplay.style.display = 'none'
   game.font = elementSize + 'px Verdana';
   game.textAlign = 'center';
 
@@ -156,6 +159,7 @@ function levelWin() {
 //rgameWinAndSetRecordeiniciar juego tras collision
 function levelFail() {
   //console.log('chocaste con un enemigo');
+  boomDisplay.style.display = 'flex'
   console.log(lives);
   lives--;
   if (lives <= 0) {
@@ -168,7 +172,7 @@ function levelFail() {
   playerPosition.x = undefined;
   playerPosition.y = undefined;
 
-  startGame();
+  setTimeout(startGame, 300);
 }
 //ganar Juego
 function gameWinAndSetRecord() {
@@ -199,8 +203,9 @@ function endDisplay(n) {
   if (n === 1) {
     finalP.innerHTML = 'GANASTE'
   } else if (n === 2) {
+    finalDiv.style.backgroundColor = 'var(--lose)'
     finalP.innerHTML = 'PERDISTE'
-
+    return
   }
 
 }
